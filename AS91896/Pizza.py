@@ -1,4 +1,4 @@
-BigNewYorkerRange = ['Big New Yorker', 'Big Margherita', 'Big BBQ Bacon', 'Big Triple Cheese']
+BigNewYorker = ['Big New Yorker', 'Big Margherita', 'Big BBQ Bacon', 'Big Triple Cheese']
 Favourites = ['Roast Veggie & Caramelised Onion with Vegan Cheese', 'Margherita', 'Beef, Bacon & Caramelized Onion', 'Meat Lovers', 'Super Supreme', 'Loaded Pepperoni With Double Toppings', 'Loaded Hawaiian With Double Toppings', 'Triple Meat & Cheese', 'BBQ Beef & Onion', 'BBQ Bacon & Mushroom', 'Italian Lovers', 'Hot & Spicy Veggie', 'Veggie Lovers']
 Deluxe = ['Hot Buffalo Fried Chicken', 'Hotter Buffalo Fried Chicken', 'Hottest Buffalo Fried chicken', 'Chicken Cranberry', 'Sticky Chicken with Honey Garlic', 'Peri Peri Chicken', 'Fried Chicken & Bacon Ranch', 'Garlic Shrimp Deluxe', 'Mega Meat Lovers', 'Apricot Chicken Deluxe', 'Chicken Deluxe', 'BBQ Chicken & Bacon Deluxe']
 ClassicValue = ['Classic Cheese', 'Americano', 'Ham & Cheese', 'Classic Vege', 'Pepperoni', 'Hawaiian', 'Cheesy Garlic', 'Beef & Onion']
@@ -10,9 +10,10 @@ Sauce = ['Hot Chilli Drizzle', 'Buffalo Drizzle', 'BBQ Drizzle', 'Mayo Drizzle',
 MeatExtra = ['Pepperoni', 'Ham', 'Bacon', 'Beef', 'Chicken', 'Shrimp', 'Italian Sausage']
 VegeExtra = ['Onion Rings', 'Pineapple', 'Tomato', 'Olives', 'Green Capsicum', 'Dried Red Capsicum', 'Jelepenos', 'Mushrooms', 'Red Onions']
 Extra = ['Parmesan Cheese', 'Garlic Sprinkle', 'Lemon Pepper Sprinkle', 'Oregano', 'Chilli Flakes']
-pizzas = [BigNewYorkerRange, Favourites, Deluxe, ClassicValue]
-
-order = []
+Pizzas = (BigNewYorker, Favourites, Deluxe, ClassicValue)
+Order = []
+Price = 0
+Choice = ''
 
 n = 0
 s = ''
@@ -21,11 +22,11 @@ def NumError():
     global n 
     while True:
         try:
-            n = int(input(prompt))
+            n = float(input(prompt))
             if n <= 0:
                 print('number had to be positive')
-            NumError()
-            if n >= 122:
+                NumError()
+            if n >= 9999999999:
                 print('That is too much, try again')
             break
         except ValueError or TypeError:
@@ -34,24 +35,61 @@ def NumError():
 
 prompt = ''
 
+while True:
+    Collect = str(input('Would you like deliverly or pickup? '))
+    Collect = Collect.lower().strip().replace(' ', '')
+    if Collect == 'pickup':
+        Price += 3
+        FirstName = str(input('What is the first name? '))
+        LastName = str(input('What is the last name? '))
+        Address = str(input('What is the address? '))
+        prompt = 'Whats the phone number? '
+        NumError()
+        PhoneNumber = int(n)
+        print('\nFirst name: ', FirstName, '\nLast name: ', LastName, '\nAddress: ', Address, '\nPhone number: ', PhoneNumber)
+        while True:
+            Correct = str(input('Is this information correct? (y/n) '))
+            if Correct in ('y', 'n'):
+                break
+            print('Invalid input')
+        if Correct == 'n':
+            continue
+        else:
+            break
+    elif Collect == 'delivery':
+        FirstName = str(input('What is the first name? '))
+        LastName = str(input('What is the last name? '))
+        print('\nFirst name: ', FirstName, '\nLast name: ', LastName)
+        while True:
+            Correct = str(input('Is this information correct? (y/n) '))
+            if Correct in ('y', 'n'):
+                break
+            print('Invalid input')
+        if Correct == 'n':
+            continue
+        else:
+            break
+    else:
+        print('that is not an option')
+    if Collect in ('delivery', 'pickup'):
+        break
 
-pickup = str(input('Would you like deliverly or pickup? '))
-pickup = pickup.lower().strip().replace(' ', '')
-
-if pickup == 'pickup':
-
-elif pickup == 'delivery':
-
-else:
-    print('that is not an option')
-
-
-
-
-
-
-
-
+Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) '))
+Range = Range.lower().title().strip().replace(' ', '')
+Range = locals()[Range]
+if Range in Pizzas:
+    while Choice != 'Done': 
+        print(*Range, sep='\n')
+        Choice = str(input('what pizzas do you want? '))
+        Choice = Choice.lower().title().strip()
+        if Choice in Range:
+            ChoiceSize = str(input('Size would you like? (Snack, Large, Extra Large) '))
+            ChoiceSize = ChoiceSize.lower().title().strip()
+    print('no')
+elif Range not in Pizzas:
+    print('That is not an avalible range, try again')
+    break
+    
 
 
 
