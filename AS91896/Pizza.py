@@ -14,6 +14,7 @@ Pizzas = (BigNewYorker, Favourites, Deluxe, ClassicValue)
 Order = []
 Price = 0
 Choice = ''
+Choices = []
 
 n = 0
 s = ''
@@ -31,6 +32,15 @@ def NumError():
             break
         except ValueError or TypeError:
             print('Thats not a number! Try again')
+
+def StrError():
+    global s
+    while True:
+        try:
+            s = str(input(prompt))
+        except KeyError:
+            print("That is not avalible, Try again!")
+
         
 
 prompt = ''
@@ -38,7 +48,7 @@ prompt = ''
 while True:
     Collect = str(input('Would you like deliverly or pickup? '))
     Collect = Collect.lower().strip().replace(' ', '')
-    if Collect == 'pickup':
+    if Collect == 'delivery':
         Price += 3
         FirstName = str(input('What is the first name? '))
         LastName = str(input('What is the last name? '))
@@ -56,7 +66,7 @@ while True:
             continue
         else:
             break
-    elif Collect == 'delivery':
+    elif Collect == 'pickup':
         FirstName = str(input('What is the first name? '))
         LastName = str(input('What is the last name? '))
         print('\nFirst name: ', FirstName, '\nLast name: ', LastName)
@@ -74,22 +84,26 @@ while True:
     if Collect in ('delivery', 'pickup'):
         break
 
-Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) '))
-Range = Range.lower().title().strip().replace(' ', '')
-Range = locals()[Range]
-if Range in Pizzas:
-    while Choice != 'Done': 
-        print(*Range, sep='\n')
-        Choice = str(input('what pizzas do you want? '))
-        Choice = Choice.lower().title().strip()
-        if Choice in Range:
-            ChoiceSize = str(input('Size would you like? (Snack, Large, Extra Large) '))
-            ChoiceSize = ChoiceSize.lower().title().strip()
-    print('no')
-elif Range not in Pizzas:
-    print('That is not an avalible range, try again')
-    break
-    
+while True:
+    prompt = "What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) "
+    StrError()
+    Range = str(s)
+    Range = Range.lower().title().strip().replace(' ', '')
+    Range = locals()[Range]
+    if Range in Pizzas:
+        while Choice != 'Done': 
+            print(*Range, sep='\n')
+            Choice = str(input('what pizzas do you want? '))
+            Choice = Choice.lower().title().strip()
+            Choices.append(Choice)
+            if Choice in Range:
+                ChoiceSize = str(input('Size would you like? (Snack, Large, Extra Large) '))
+                ChoiceSize = ChoiceSize.lower().title().strip()
+                Choices.append(ChoiceSize)
+        print('no')
+    elif Range not in Pizzas:
+        print('That is not an avalible range, try again')
+        continue
 
 
 
