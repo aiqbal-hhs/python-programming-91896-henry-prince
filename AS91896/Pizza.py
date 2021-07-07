@@ -18,6 +18,7 @@ Choices = []
 
 n = 0
 s = ''
+prompt = ''
 
 def NumError():
     global n 
@@ -35,16 +36,14 @@ def NumError():
 
 def StrError():
     global key
+    global s
     while True:
         try:
-            key
+            s = globals()[key]
+            return()
         except KeyError:
-            print("That is not avalible, Try again!")
             break
 
-        
-
-prompt = ''
 
 while True:
     Collect = str(input('Would you like deliverly or pickup? '))
@@ -86,10 +85,10 @@ while True:
         break
 
 while True:
-    prompt = 'What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value)'
-    Range = Range.lower().title().strip().replace(' ', '')
+    Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value)'))
+    key = Range.lower().title().strip().replace(' ', '')
     StrError()
-    Range = locals()[key]
+    Range = s
     if Range in Pizzas:
         while Choice != 'Done': 
             print("\nHere is the deluxe range:\n", *Range, sep='\n')
@@ -107,11 +106,9 @@ while True:
                     ChoiceCrust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust, Gluten Free\n'))
                     ChoiceCrust = ChoiceCrust.lower().title().strip()
                     Choices.append(ChoiceSize)
-                    print(Choices)
-    elif Range not in Pizzas:
-        print('That is not an avalible range, try again')
-        StrError()
-
+                    print(Choices)            
+    else:
+        print('That is not a range, try again!')
 #TODO
 #fix error handling in {} = locals()[{}]
 
