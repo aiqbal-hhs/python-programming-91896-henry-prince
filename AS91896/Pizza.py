@@ -34,12 +34,13 @@ def NumError():
             print('Thats not a number! Try again')
 
 def StrError():
-    global s
+    global key
     while True:
         try:
-            s = str(input(prompt))
+            key
         except KeyError:
             print("That is not avalible, Try again!")
+            break
 
         
 
@@ -85,26 +86,34 @@ while True:
         break
 
 while True:
-    prompt = "What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) "
-    StrError()
-    Range = str(s)
+    prompt = 'What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value)'
     Range = Range.lower().title().strip().replace(' ', '')
-    Range = locals()[Range]
+    StrError()
+    Range = locals()[key]
     if Range in Pizzas:
         while Choice != 'Done': 
-            print(*Range, sep='\n')
-            Choice = str(input('what pizzas do you want? '))
+            print("\nHere is the deluxe range:\n", *Range, sep='\n')
+            prompt = "\nWhat pizza would you like? "
+            StrError()
+            Choice = str(s)
             Choice = Choice.lower().title().strip()
             Choices.append(Choice)
             if Choice in Range:
-                ChoiceSize = str(input('Size would you like? (Snack, Large, Extra Large) '))
+                ChoiceSize = str(input('What size would you like?\nSnack, Large, Extra Large\n'))
                 ChoiceSize = ChoiceSize.lower().title().strip()
                 Choices.append(ChoiceSize)
-        print('no')
+                print(Choices)
+                if ChoiceSize == 'Large':
+                    ChoiceCrust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust, Gluten Free\n'))
+                    ChoiceCrust = ChoiceCrust.lower().title().strip()
+                    Choices.append(ChoiceSize)
+                    print(Choices)
     elif Range not in Pizzas:
         print('That is not an avalible range, try again')
-        continue
+        StrError()
 
+#TODO
+#fix error handling in {} = locals()[{}]
 
 
 #import PySimpleGUI as sg
