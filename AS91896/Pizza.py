@@ -1,5 +1,4 @@
-from typing import Text
-
+import os
 
 BigNewYorker = ['Big New Yorker', 'Big Margherita', 'Big BBQ Bacon', 'Big Triple Cheese']
 Favourites = ['Roast Veggie & Caramelised Onion with Vegan Cheese', 'Margherita', 'Beef, Bacon & Caramelized Onion', 'Meat Lovers', 'Super Supreme', 'Loaded Pepperoni With Double Toppings', 'Loaded Hawaiian With Double Toppings', 'Triple Meat & Cheese', 'BBQ Beef & Onion', 'BBQ Bacon & Mushroom', 'Italian Lovers', 'Hot & Spicy Veggie', 'Veggie Lovers']
@@ -87,6 +86,7 @@ while True:
     if Collect in ('delivery', 'pickup'):
         break
 
+
 while True:
     Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value)'))
     key = Range.lower().title().strip().replace(' ', '')
@@ -94,14 +94,15 @@ while True:
     Range = s
     if Range in Pizzas:
         while Choice != 'Done': 
-            print("\nHere is the deluxe range:\n", *Range, sep='\n')
+            print("\nHere is the {} range:\n" .format(key), *Range, sep='\n')
             Choice = str(input('What pizza would you like? '))
-            Choice = Choice.lower().title().strip()
-            Choices.append(Choice)
+            Choice = Choice.lower().title().strip().replace("Bbq", "BBQ").replace("And", "&")
             if Choice in Range:
+                Choices.append(Choice)
                 ChoiceSize = str(input('What size would you like?\nSnack, Large, Extra Large\n'))
                 ChoiceSize = ChoiceSize.lower().title().strip()
-                Choices.append(ChoiceSize)
+                if ChoiceSize in Crust or CrustLarge:
+                    Choices.append(ChoiceSize)
                 print(Choices)
                 if ChoiceSize == 'Large':
                     print(Choices)
@@ -109,6 +110,8 @@ while True:
                         ChoiceCrust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust\n'))
                         ChoiceCrust = ChoiceCrust.lower().title().strip()
                         Choices.append(ChoiceSize)
+            elif Choice not in Range:
+                print("\nThat is not an option, please select again.\n")
     else:
         print('That is not a range, try again!')
 #TODO
