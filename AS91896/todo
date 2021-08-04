@@ -3,3 +3,4 @@ fix looping in pizza options (remove strerror())
 cover extras
 make code more efficent
 put everything into a gui
+fix confirmation not picking up n

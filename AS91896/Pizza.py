@@ -53,10 +53,8 @@ def correct():
     while True:
         Correct = str(input('Please check if this information correct? (y/n) '))
         if Correct in ('y', 'n'):
-            break
+           break 
         print('Invalid input')
-    else:
-        return()
 
 
 
@@ -75,7 +73,7 @@ while True:
             print('\nFirst name: ', FirstName, '\nLast name: ', LastName, '\nAddress: ', Address, '\nPhone number: ', PhoneNumber)
             correct()
     elif Collect == 'pickup':
-        while Correct == '' or 'n':
+        while Correct == '' or 'n' and True:
             FirstName = str(input('What is the first name? '))
             correct()
             LastName = str(input('What is the last name? '))
