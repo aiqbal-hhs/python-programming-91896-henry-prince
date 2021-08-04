@@ -1,24 +1,22 @@
-from typing import Text
+import os
+import json
+
+with open("pizza.json") as plist:
+    pizza = json.load(plist)
+with open("order.json", "w") as order:
+    json.load(order)
 
 
-BigNewYorker = ['Big New Yorker', 'Big Margherita', 'Big BBQ Bacon', 'Big Triple Cheese']
-Favourites = ['Roast Veggie & Caramelised Onion with Vegan Cheese', 'Margherita', 'Beef, Bacon & Caramelized Onion', 'Meat Lovers', 'Super Supreme', 'Loaded Pepperoni With Double Toppings', 'Loaded Hawaiian With Double Toppings', 'Triple Meat & Cheese', 'BBQ Beef & Onion', 'BBQ Bacon & Mushroom', 'Italian Lovers', 'Hot & Spicy Veggie', 'Veggie Lovers']
-Deluxe = ['Hot Buffalo Fried Chicken', 'Hotter Buffalo Fried Chicken', 'Hottest Buffalo Fried chicken', 'Chicken Cranberry', 'Sticky Chicken with Honey Garlic', 'Peri Peri Chicken', 'Fried Chicken & Bacon Ranch', 'Garlic Shrimp Deluxe', 'Mega Meat Lovers', 'Apricot Chicken Deluxe', 'Chicken Deluxe', 'BBQ Chicken & Bacon Deluxe']
-ClassicValue = ['Classic Cheese', 'Americano', 'Ham & Cheese', 'Classic Vege', 'Pepperoni', 'Hawaiian', 'Cheesy Garlic', 'Beef & Onion']
-Size = ['Snack', 'Large', 'Extra Large']
-CrustLarge = ['Pan', 'San Fransisco Style', 'Thin''n''Crispy', 'Mozzarella Stuffed Crust', 'Cheesy Garlic Stuffed Crust', 'Gluten Free']
-Crust = ['Pan', 'San Fransisco Style', 'Thin''n''Crispy', 'Mozzarella Stuffed Crust', 'Cheesy Garlic Stuffed Crust']
-Base = ['Buffalo Sauce', 'Honey Garlic Sauce', 'Authentic Tomato', 'BBQ Sauce', 'No Sauce']
-Cheese = ['Cheese', 'Extra Cheese', 'Vegan Cheese', 'No Cheese']
-Sauce = ['Hot Chilli Drizzle', 'Buffalo Drizzle', 'BBQ Drizzle', 'Mayo Drizzle', 'Basil Drizzle', 'Honey Garlic', 'Peri Peri Drizzle', 'Aioli Drizzle', 'Apricot Drizzle', 'Ranch Drizzle']
-MeatExtra = ['Pepperoni', 'Ham', 'Bacon', 'Beef', 'Chicken', 'Shrimp', 'Italian Sausage']
-VegeExtra = ['Onion Rings', 'Pineapple', 'Tomato', 'Olives', 'Green Capsicum', 'Dried Red Capsicum', 'Jelepenos', 'Mushrooms', 'Red Onions']
-Extra = ['Parmesan Cheese', 'Garlic Sprinkle', 'Lemon Pepper Sprinkle', 'Oregano', 'Chilli Flakes']
-Pizzas = (BigNewYorker, Favourites, Deluxe, ClassicValue)
-Order = []
+Pizzas = plist['Ranges']
+Options = plist['Options']
+extras = plist['Extras']
 Price = 0
 Choice = ''
-Choices = []
+
+
+OrderData = {
+    "pizzas" : pizza,
+}
 
 n = 0
 s = ''
@@ -56,7 +54,7 @@ def correct():
            break 
         print('Invalid input')
 
-
+print(pizza)
 
 while True:
     Collect = str(input('Would you like deliverly or pickup? '))
@@ -85,6 +83,7 @@ while True:
     if Collect in ('delivery', 'pickup'):
         break
 
+
 while True:
     Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value)'))
     key = Range.lower().title().strip().replace(' ', '')
@@ -92,21 +91,24 @@ while True:
     Range = s
     if Range in Pizzas:
         while Choice != 'Done': 
-            print("\nHere is the deluxe range:\n", *Range, sep='\n')
+            print("\nHere is the {} range:\n" .format(key), *Range, sep='\n')
             Choice = str(input('What pizza would you like? '))
-            Choice = Choice.lower().title().strip()
-            Choices.append(Choice)
+            Choice = Choice.lower().title().strip().replace("Bbq", "BBQ").replace("And", "&")
             if Choice in Range:
-                ChoiceSize = str(input('What size would you like?\nSnack, Large, Extra Large\n'))
-                ChoiceSize = ChoiceSize.lower().title().strip()
-                Choices.append(ChoiceSize)
+                
+                Size = str(input('What size would you like?\nSnack, Large, Extra Large\n'))
+                Size = Size.lower().title().strip()
+                if Size in Crust or Large:
+                    Choices.append(Size)
                 print(Choices)
-                if ChoiceSize == 'Large':
+                if Size == 'Large':
                     print(Choices)
-                if ChoiceSize in Crust:
-                        ChoiceCrust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust\n'))
-                        ChoiceCrust = ChoiceCrust.lower().title().strip()
-                        Choices.append(ChoiceSize)
+                if Size in Crust:
+                        Crust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust\n'))
+                        Crust = Crust.lower().title().strip()
+                        Choices.append(Size)
+            elif Choice not in Range:
+                print("\nThat is not an option, please select again.\n")
     else:
         print('That is not a range, try again!')
 #TODO

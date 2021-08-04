@@ -209,7 +209,7 @@
             ]
         }
     ],
-    "Extra": [
+    "Options": [
         {
             "Sizes": [
                 {
@@ -313,7 +313,9 @@
                     "Sauce": "Ranch Drizzle"
                 }
             ]
-        },
+        }
+    ],
+    "Extras" : [
         {
             "MeatExtras": [
                 {
