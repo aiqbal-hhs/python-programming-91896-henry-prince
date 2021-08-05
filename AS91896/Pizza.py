@@ -9,47 +9,46 @@ Pizzas = selection['Ranges']
 Options = selection['Options']
 extras = selection['Extras']
 Price = 0
-Choice = ''
-
 n = 0
 s = ''
 prompt = ''
-Correct = ''
 direct = ''
 
-def NumError():
-    global n
+def NumError(prompt):
     global direct
     while True:
         try:
-            n = float(input(prompt))
+            answer = float(input(prompt))
             if n <= 0:
                 print('number had to be positive')
-                NumError()
+                NumError(prompt)
             if n >= 9999999999:
                 print('That is too much, try again')
-            direct = 2
-            correct()
-            break
-        except ValueError or TypeError:
+            else:
+                direct = 2
+                correct()
+                return answer
+        except ValueError:
             print('Thats not a number! Try again')
 
 
-def StrError():
-    global s
+def StrError(prompt):
     global direct
     while True:
-        try:
-            s = str(input(prompt))
-            direct = 1
-            correct()
-            break
-        except KeyError:
-            print('Theres invalid characters in there!')
-
+        answer = str(input(prompt))
+        for f in [int, float]:
+            try:
+                _ = f(answer)
+            except:
+                pass
+            else:
+                print('Input shouldnt be a number')
+                StrError()
+        direct = 1
+        correct()
+        return answer
 
 def correct():
-    global s
     Correct = ''
     while True:
         Correct = str(input('Please check if this information correct? (y/n) '))
@@ -66,19 +65,10 @@ def correct():
             continue
 
 def delivery():
-    global prompt
-    prompt = ('What is the first name? ')
-    StrError()
-    FirstName = s
-    prompt = ('What is the last name? ')
-    StrError()
-    LastName = s
-    prompt = ('What is the address? ')
-    StrError()
-    Address = s
-    prompt = 'Whats the phone number? '
-    NumError()
-    PhoneNumber = int(n)
+    FirstName = StrError('What is the first name? ')
+    LastName = StrError('What is the last name? ')
+    Address = StrError('What is the address? ')
+    PhoneNumber = NumError('Whats the phone number? ')
     print('\nFirst name: ', FirstName, '\nLast name: ', LastName, '\nAddress: ', Address, '\nPhone number: ', PhoneNumber)
     ContactInfo = {
         "Name" : (FirstName, LastName),
@@ -86,13 +76,8 @@ def delivery():
         "PhoneNumber" : PhoneNumber
         }
 def pickup():
-    global prompt
-    prompt = ('What is the first name? ')
-    StrError()
-    FirstName = s
-    prompt = ('What is the last name? ')
-    StrError()
-    LastName = s
+    FirstName = StrError('What is the first name? ')
+    LastName = StrError('What is the last name? ')
     print('\nFirst name: ', FirstName, '\nLast name: ', LastName)
     ContactInfo = {
         "Name" : (FirstName, LastName)
@@ -112,11 +97,18 @@ while True:
         break
 
 
+with open('pizza.json') as pfind:
+    Selection = json.load(pfind)
+
 while True:
     Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) '))
     Range = Range.lower().title().strip().replace(' ', '')
-    for item in selection:
-        if item in ['Ranges']:
+    for Range in Selection:
+        if Range in Selection['Ranges']:
+            print('hello')
+    else:
+        print('That is not an option!')
+        continue
     
     #LEFT OFF FROM HERE, NEED TO PRINT OFF LIST OF PIZZAS
 
