@@ -4,6 +4,7 @@ import json
 
 with open("pizza.json") as plist:
     selection = json.loads(plist.read())
+    Parse = json
 
 Pizzas = selection['Ranges']
 Options = selection['Options']
@@ -101,11 +102,12 @@ with open('pizza.json') as pfind:
     Selection = json.load(pfind)
 
 while True:
-    Range = str(input('What range would you like? (Big New Yorker, Favorites, Deluxe, Classic Value) '))
-    Range = Range.lower().title().strip().replace(' ', '')
-    for Range in Selection:
-        if Range in Selection['Ranges']:
-            print('hello')
+    Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
+    Range -= 1
+    for Range in Pizzas:
+        if Range in Pizzas:
+            print('test')
+        break
     else:
         print('That is not an option!')
         continue
