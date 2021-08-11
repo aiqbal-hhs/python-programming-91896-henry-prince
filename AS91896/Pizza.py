@@ -4,16 +4,16 @@ import json
 
 with open("pizza.json") as plist:
     selection = json.loads(plist.read())
-    Parse = json
 
-Pizzas = selection['Ranges']
-Options = selection['Options']
-extras = selection['Extras']
+Pizzas = selection["Ranges"]
+Options = selection["Options"]
+extras = selection["Extras"]
 Price = 0
 n = 0
 s = ''
-prompt = ''
+Prompt = ''
 direct = ''
+
 
 def NumError(prompt):
     global direct
@@ -35,6 +35,7 @@ def NumError(prompt):
 
 def StrError(prompt):
     global direct
+    global Prompt
     while True:
         answer = str(input(prompt))
         for f in [int, float]:
@@ -45,11 +46,14 @@ def StrError(prompt):
             else:
                 print('Input shouldnt be a number')
                 StrError()
+        Prompt = prompt
         direct = 1
         correct()
         return answer
 
+
 def correct():
+    global Prompt
     Correct = ''
     while True:
         Correct = str(input('Please check if this information correct? (y/n) '))
@@ -58,12 +62,13 @@ def correct():
                 return
             else:
                 if direct == 1:
-                    StrError()
+                    StrError(Prompt)
                 else:
-                    NumError()
+                    NumError(Prompt)
         else:
             print('Invalid input')
             continue
+
 
 def delivery():
     FirstName = StrError('What is the first name? ')
@@ -72,16 +77,18 @@ def delivery():
     PhoneNumber = NumError('Whats the phone number? ')
     print('\nFirst name: ', FirstName, '\nLast name: ', LastName, '\nAddress: ', Address, '\nPhone number: ', PhoneNumber)
     ContactInfo = {
-        "Name" : (FirstName, LastName),
-        "Address" : Address,
-        "PhoneNumber" : PhoneNumber
+        "Name": (FirstName, LastName),
+        "Address": Address,
+        "PhoneNumber": PhoneNumber
         }
+
+
 def pickup():
     FirstName = StrError('What is the first name? ')
     LastName = StrError('What is the last name? ')
     print('\nFirst name: ', FirstName, '\nLast name: ', LastName)
     ContactInfo = {
-        "Name" : (FirstName, LastName)
+        "Name": (FirstName, LastName)
         }
 
 while True:
@@ -106,8 +113,8 @@ while True:
     Range -= 1
     for Range in Pizzas:
         if Range in Pizzas:
-            print('test')
-        break
+            print(Range)
+            break
     else:
         print('That is not an option!')
         continue
