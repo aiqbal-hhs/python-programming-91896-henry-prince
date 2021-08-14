@@ -5,9 +5,10 @@ import json
 with open("pizza.json") as plist:
     selection = json.loads(plist.read())
 
-Pizzas = selection["Ranges"]
-Options = selection["Options"]
-extras = selection["Extras"]
+with open('pizza.json') as pfind:
+    Selection = json.load(pfind)
+
+
 Price = 0
 n = 0
 s = ''
@@ -37,6 +38,7 @@ def StrError(prompt):
     global direct
     global Prompt
     while True:
+        Prompt = prompt
         answer = str(input(prompt))
         for f in [int, float]:
             try:
@@ -45,8 +47,7 @@ def StrError(prompt):
                 pass
             else:
                 print('Input shouldnt be a number')
-                StrError()
-        Prompt = prompt
+                StrError(Prompt)
         direct = 1
         correct()
         return answer
@@ -55,7 +56,7 @@ def StrError(prompt):
 def correct():
     global Prompt
     Correct = ''
-    while True:
+    while Correct == '':
         Correct = str(input('Please check if this information correct? (y/n) '))
         if Correct in ('y', 'n'):
             if Correct == 'y':
@@ -105,21 +106,22 @@ while True:
         break
 
 
-with open('pizza.json') as pfind:
-    Selection = json.load(pfind)
-
 while True:
     Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
     Range -= 1
-    for Range in Pizzas:
-        if Range in Pizzas:
-            print(Range)
-            break
+    n = 1
+    if Range > -1 and Range <= len(selection["Ranges"]) - 1:
+        _Range = Selection["Ranges"][Range]
+        for _Pizza in _Range:
+            for _Pizzaname in _Range[_Pizza]:
+                for key, val in _Pizzaname.items():
+                    if key == 'Pizza':
+                        print(n, val)
+                        n += 1
     else:
         print('That is not an option!')
         continue
     
-    #LEFT OFF FROM HERE, NEED TO PRINT OFF LIST OF PIZZAS
 
 
 #                Choice = str(input('What pizza would you like? '))
