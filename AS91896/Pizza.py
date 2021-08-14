@@ -14,6 +14,7 @@ n = 0
 s = ''
 Prompt = ''
 direct = ''
+Choice = []
 
 
 def NumError(prompt):
@@ -21,10 +22,10 @@ def NumError(prompt):
     while True:
         try:
             answer = float(input(prompt))
-            if n <= 0:
+            if answer <= 0:
                 print('number had to be positive')
                 NumError(prompt)
-            if n >= 9999999999:
+            if answer >= 9999999999:
                 print('That is too much, try again')
             else:
                 direct = 2
@@ -92,6 +93,34 @@ def pickup():
         "Name": (FirstName, LastName)
         }
 
+
+def RangeSelect():
+    Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
+    Range -= 1
+    n = 1
+    if Range > -1 and Range <= len(selection["Ranges"]) - 1:
+        _Range = Selection["Ranges"][Range]
+        for _Pizza in _Range:
+            for _Pizzaname in _Range[_Pizza]:
+                for key, val in _Pizzaname.items():
+                    if key == 'Pizza':
+                        print("{}. {}" .format(n, val))
+                        Choice.append(val)
+                        n += 1
+    else:
+        print('That is not an option!')
+
+
+def PizzaSelect():
+    Pizza = NumError("What Pizza would you like?")
+    Pizza -= 1
+    if int(Pizza) in Choice:
+        print("work")
+    else:
+        print("not")
+    #cant find in list
+
+
 while True:
     Collect = str(input('Would you like deliverly or pickup? '))
     Collect = Collect.lower().strip().replace(' ', '')
@@ -102,25 +131,11 @@ while True:
         pickup()
     else:
         print('that is not an option')
-    if Collect in ('delivery', 'pickup'):
-        break
+    RangeSelect()
+    PizzaSelect()
+        
 
 
-while True:
-    Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
-    Range -= 1
-    n = 1
-    if Range > -1 and Range <= len(selection["Ranges"]) - 1:
-        _Range = Selection["Ranges"][Range]
-        for _Pizza in _Range:
-            for _Pizzaname in _Range[_Pizza]:
-                for key, val in _Pizzaname.items():
-                    if key == 'Pizza':
-                        print(n, val)
-                        n += 1
-    else:
-        print('That is not an option!')
-        continue
     
 
 
