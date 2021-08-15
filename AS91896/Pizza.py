@@ -14,8 +14,9 @@ n = 0
 s = ''
 Prompt = ''
 direct = ''
-Choice = []
-
+Rangeli = {}
+Choiceli = {}
+Pizzali = {}
 
 def NumError(prompt):
     global direct
@@ -105,7 +106,7 @@ def RangeSelect():
                 for key, val in _Pizzaname.items():
                     if key == 'Pizza':
                         print("{}. {}" .format(n, val))
-                        Choice.append(val)
+                        Rangeli[n] = val
                         n += 1
     else:
         print('That is not an option!')
@@ -113,12 +114,8 @@ def RangeSelect():
 
 def PizzaSelect():
     Pizza = NumError("What Pizza would you like?")
-    Pizza -= 1
-    if int(Pizza) in Choice:
-        print("work")
-    else:
-        print("not")
-    #cant find in list
+    
+    #cant find in list    
 
 
 while True:
@@ -133,6 +130,7 @@ while True:
         print('that is not an option')
     RangeSelect()
     PizzaSelect()
+    break
         
 
 
