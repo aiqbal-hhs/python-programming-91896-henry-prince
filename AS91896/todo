@@ -1,6 +1,1 @@
-limit big new yorker size selection
-fix looping in pizza options (remove strerror())
-cover extras
-make code more efficent
-put everything into a gui
-fix confirmation not picking up n
+distinguse floats from strings in numerror() (for error message comprehentions)

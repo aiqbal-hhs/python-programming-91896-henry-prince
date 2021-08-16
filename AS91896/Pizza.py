@@ -16,7 +16,6 @@ Prompt = ''
 direct = ''
 Rangeli = {}
 Pizzali = {}
-Pizzas = {}
 Extrali = {}
 
 
@@ -24,7 +23,7 @@ def NumError(prompt):
     global direct
     while True:
         try:
-            answer = float(input(prompt))
+            answer = int(input(prompt))
             if answer <= 0:
                 print('number had to be positive')
                 NumError(prompt)
@@ -98,6 +97,7 @@ def pickup():
 
 
 def RangeSelect():
+    global _Range
     Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
     Range -= 1
     n = 1
@@ -119,20 +119,32 @@ def PSelect():
     Pizza = NumError("What Pizza would you like? ")
     if Pizza in Rangeli:
         _Pizza = Rangeli[Pizza]
-        Pizzali["Name"] = _Pizza    
+        return   
     else:
         print("That is not an avalible pizza in the range")
 
 
 def PAmmount():
     global _Pizza
+    global _Range
+    n = 0
     Pammount = NumError("How many {} pizzas would you like? (up to 5)".format(_Pizza))
-    if Pammount <= 5:
-        Pizzali["Amount"] = Pammount
-    elif Pammount > 5:
-        print('That is too many!')
+    if Pammount <= 1 and len(Pizzali) <= 5:
+        for i in range(Pammount):
+            n += 1
+            Pizzali[n] = {}
+            Pizzali[n]["Name"] = _Pizza
+            print(Pizzali)
+    elif Pammount > 5 or Pammount < 1:
+        print('That is an invalid input!')
         PAmmount()
 
+
+def POptions():
+    print("Sizes")
+    print("Bases")
+    print("cheeses")
+    print("sauces")
 
 def PToppings():
     global _Pizza
@@ -152,7 +164,7 @@ def PToppings():
             break
         else:
             print("That is not an avalible topping!")
-
+#Topping question prints off pizza details
 
 
 while True:
@@ -169,53 +181,6 @@ while True:
     RangeSelect()
     PSelect()
     PAmmount()
-    PToppings()
-        
-
-
     
-
-
-#                Choice = str(input('What pizza would you like? '))
-#                Choice = Choice.lower().title().strip().replace("Bbq", "BBQ").replace("And", "&")
-#                if Choice in Range:
-#                    
-#                    Size = str(input('What size would you like?\nSnack, Large, Extra Large\n'))
-#                    Size = Size.lower().title().strip()
-#                    if Size in Crust or "Large":
-#                        print('cum')
-#                    if Size == 'Large':
-#                        print("cum")
-#                    if Size in Crust:
-#                            Crust = str(input('What crust would you like?\nPan, San Fransisco Style, Thin'"'"'n'"'"'Crispy, Mozzarella Stuffed Crust, Cheesy Garlic Stuffed Crust\n'))
-#                            Crust = Crust.lower().title().strip()
-#                elif Choice not in Range:
-#                    print("\nThat is not an option, please select again.\n")
-#        else:
-#            print('That is not a range, try again!')
-#            continue
-#    OrderData = {
-#        "pizzas" : pizza,
-#    }
-#    json_order = json.dumps(OrderData, indent = 4)
-#    with open("order.json", "w") as order:
-#        order.write(json_order)
-
-#TODO
-#fix error handling in {} = locals()[{}]
-
-
-#import PySimpleGUI as sg
-
-#layout = [ [sg.Text('cum')],
-#           [sg.Text('cum?'), sg.InputText()],
-#           [sg.Button('ok'), sg.Button('exit')] ]
-#window = sg.Window('cum?', layout)
-
-#while True:
-#    event, values = window.read()
-#    if event == sg.WIN_CLOSED or event == 'cancle':
-#        break
-#    print('CUM')
-
-#window.close()
+    PToppings()
+    break
