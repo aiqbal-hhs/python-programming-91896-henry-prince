@@ -14,7 +14,10 @@ n = 0
 s = ''
 Prompt = ''
 direct = ''
-Choice = []
+Rangeli = {}
+Pizzali = {}
+Pizzas = {}
+Extrali = {}
 
 
 def NumError(prompt):
@@ -105,20 +108,51 @@ def RangeSelect():
                 for key, val in _Pizzaname.items():
                     if key == 'Pizza':
                         print("{}. {}" .format(n, val))
-                        Choice.append(val)
+                        Rangeli[n] = val
                         n += 1
     else:
         print('That is not an option!')
 
 
-def PizzaSelect():
-    Pizza = NumError("What Pizza would you like?")
-    Pizza -= 1
-    if int(Pizza) in Choice:
-        print("work")
+def PSelect():
+    global _Pizza
+    Pizza = NumError("What Pizza would you like? ")
+    if Pizza in Rangeli:
+        _Pizza = Rangeli[Pizza]
+        Pizzali["Name"] = _Pizza    
     else:
-        print("not")
-    #cant find in list
+        print("That is not an avalible pizza in the range")
+
+
+def PAmmount():
+    global _Pizza
+    Pammount = NumError("How many {} pizzas would you like? (up to 5)".format(_Pizza))
+    if Pammount <= 5:
+        Pizzali["Amount"] = Pammount
+    elif Pammount > 5:
+        print('That is too many!')
+        PAmmount()
+
+
+def PToppings():
+    global _Pizza
+    n = 1
+    for _Topping in Selection["Extras"]:
+        for key, val in _Topping.items():
+            if key == "Name":
+                print("{}. {}".format(n, val))
+                Extrali[n] = val
+                n += 1
+    while True:
+        Toppings = NumError('Which toppings would you like? (1-{}) '.format(n))
+        if Toppings in Extrali:
+            _Toppings = Extrali[Toppings]
+            Pizzali["Toppings"] = _Toppings
+            print(Pizzali)
+            break
+        else:
+            print("That is not an avalible topping!")
+
 
 
 while True:
@@ -131,8 +165,11 @@ while True:
         pickup()
     else:
         print('that is not an option')
+        continue
     RangeSelect()
-    PizzaSelect()
+    PSelect()
+    PAmmount()
+    PToppings()
         
 
 
