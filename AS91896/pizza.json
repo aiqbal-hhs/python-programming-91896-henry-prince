@@ -211,108 +211,88 @@
     ],
     "Options": [
         {
-            "Sizes": [
-                {
-                    "Size": "Snack"
-                },
-                {
-                    "Size": "Large"
-                },
-                {
-                    "Size": "Name Large"
-                }
-            ]
+            "Size": "Snack"
         },
         {
-            "Crusts": [
-                {
-                    "Crust": "Pan"
-                },
-                {
-                    "Crust": "San Fransisco Style"
-                },
-                {
-                    "Crust": "Thin 'n' Crispy"
-                },
-                {
-                    "Crust": "Mozzerella Stuffed Crust"
-                },
-                {
-                    "Crust": "Cheesy Garlic Stuffed Crust"
-                },
-                {
-                    "Crust": "Gluten Free"
-                }
-            ]
+            "Size": "Large"
         },
         {
-            "Bases": [
-                {
-                    "Base": "Buffalo Sauce"
-                },
-                {
-                    "Base": "Honey Garlic Sauce"
-                },
-                {
-                    "Base": "Authentic Tomato"
-                },
-                {
-                    "Base": "BBQ Sauce"
-                },
-                {
-                    "Base": "No Sauce"
-                }
-            ]
+            "Size": "Name Large"
         },
         {
-            "Cheeses": [
-                {
-                    "Cheese": "Cheese"
-                },
-                {
-                    "Cheese": "Name Cheese"
-                },
-                {
-                    "Cheese": "Vegan Cheese"
-                },
-                {
-                    "Cheese": "No Cheese"
-                }
-            ]
+            "Crust": "Pan"
         },
         {
-            "Sauces": [
-                {
-                    "Sauce": "Hot Chilli Drizzle"
-                },
-                {
-                    "Sauce": "Buffalo Drizzle"
-                },
-                {
-                    "Sauce": "BBQ Drizzle"
-                },
-                {
-                    "Sauce": "Mayo Drizzle"
-                },
-                {
-                    "Sauce": "Basil Drizzle"
-                },
-                {
-                    "Sauce": "Honey Drizzle"
-                },
-                {
-                    "Sauce": "Peri Peri Drizzle"
-                },
-                {
-                    "Sauce": "Aioli Drizzle"
-                },
-                {
-                    "Sauce": "Apricot Drizzle"
-                },
-                {
-                    "Sauce": "Ranch Drizzle"
-                }
-            ]
+            "Crust": "San Fransisco Style"
+        },
+        {
+            "Crust": "Thin 'n' Crispy"
+        },
+        {
+            "Crust": "Mozzerella Stuffed Crust"
+        },
+        {
+            "Crust": "Cheesy Garlic Stuffed Crust"
+        },
+        {
+            "Crust": "Gluten Free"
+        },
+        {
+            "Base": "Buffalo Sauce"
+        },
+        {
+            "Base": "Honey Garlic Sauce"
+        },
+        {
+            "Base": "Authentic Tomato"
+        },
+        {
+            "Base": "BBQ Sauce"
+        },
+        {
+            "Base": "No Sauce"
+        },
+        {
+            "Cheese": "Cheese"
+        },
+        {
+            "Cheese": "Name Cheese"
+        },
+        {
+            "Cheese": "Vegan Cheese"
+        },
+        {
+            "Cheese": "No Cheese"
+        },
+        {
+            "Sauce": "Hot Chilli Drizzle"
+        },
+        {
+            "Sauce": "Buffalo Drizzle"
+        },
+        {
+            "Sauce": "BBQ Drizzle"
+        },
+        {
+            "Sauce": "Mayo Drizzle"
+        },
+        {
+            "Sauce": "Basil Drizzle"
+        },
+        {
+            "Sauce": "Honey Drizzle"
+        },
+        {
+            "Sauce": "Peri Peri Drizzle"
+        },
+        {
+            "Sauce": "Aioli Drizzle"
+        },
+        {
+            "Sauce": "Apricot Drizzle"
+        },
+        {
+            "Sauce": "Ranch Drizzle"
         }
     ],
     "Extras" : [

@@ -98,7 +98,7 @@ def pickup():
 
 def RangeSelect():
     global _Range
-    Range = int(input('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) '))
+    Range = NumError('What range would you like? (1: Big New Yorker, 2: Favorites, 3: Deluxe, 4: Classic Value) ')
     Range -= 1
     n = 1
     if Range > -1 and Range <= len(selection["Ranges"]) - 1:
@@ -127,14 +127,15 @@ def PSelect():
 def PAmmount():
     global _Pizza
     global _Range
+    global Pammount
     n = 0
-    Pammount = NumError("How many {} pizzas would you like? (up to 5)".format(_Pizza))
+    Pammount = NumError("How many {} pizzas would you like? (up to 5) ".format(_Pizza))
     if Pammount <= 1 and len(Pizzali) <= 5:
         for i in range(Pammount):
+            print("test")
             n += 1
             Pizzali[n] = {}
             Pizzali[n]["Name"] = _Pizza
-            print(Pizzali)
     elif Pammount > 5 or Pammount < 1:
         print('That is an invalid input!')
         PAmmount()
@@ -148,6 +149,7 @@ def POptions():
 
 def PToppings():
     global _Pizza
+    global pizzan
     n = 1
     for _Topping in Selection["Extras"]:
         for key, val in _Topping.items():
@@ -159,7 +161,7 @@ def PToppings():
         Toppings = NumError('Which toppings would you like? (1-{}) '.format(n))
         if Toppings in Extrali:
             _Toppings = Extrali[Toppings]
-            Pizzali["Toppings"] = _Toppings
+            Pizzali[pizzan]["Toppings"] = _Toppings
             print(Pizzali)
             break
         else:
@@ -178,9 +180,14 @@ while True:
     else:
         print('that is not an option')
         continue
-    RangeSelect()
-    PSelect()
-    PAmmount()
-    
-    PToppings()
+    while True:
+        RangeSelect()
+        PSelect()
+        PAmmount()
+        for i in range(Pammount):
+            pizzan = 1
+            print("Pick toppings for pizza ", pizzan)
+            PToppings()
+            pizzan += 1
+        break
     break
