@@ -115,20 +115,21 @@ def RangeSelect():
 
 
 def PSelect():
-    global _Pizza
+    global Pizza
     Pizza = NumError("What Pizza would you like? ")
     if Pizza in Rangeli:
-        _Pizza = Rangeli[Pizza]
-        Pizzali["Name"] = _Pizza    
+        return Rangeli[Pizza]
     else:
         print("That is not an avalible pizza in the range")
 
 
 def PAmmount():
+    global Pizza
     global _Pizza
+    _Pizza = Rangeli[Pizza]
     Pammount = NumError("How many {} pizzas would you like? (up to 5)".format(_Pizza))
     if Pammount <= 5:
-        Pizzali["Amount"] = Pammount
+        return Pammount
     elif Pammount > 5:
         print('That is too many!')
         PAmmount()
@@ -169,10 +170,17 @@ while True:
     RangeSelect()
     PSelect()
     PAmmount()
+    for Pammount in range:
+        _Pizza = Rangeli[Pizza]
+        Pizzali["Name"] = _Pizza
+        continue
     PToppings()
         
 
-
+#collects pizza type, ammount, seperates pizza into seperate list in Pizzali from ammount selected
+#go through each and adds to price, goes onto next type of pizza repeat.
+#create a function that takes the price and adds it to the total price.
+#create a list of all pizzas
     
 
 
