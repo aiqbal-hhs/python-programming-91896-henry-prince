@@ -1,30 +1,39 @@
+import sys
+
+#Error control for int or floats
 def NumError(prompt):
     global Prompt
     global answer
     Prompt = prompt
+    #tries to find if number is a valid number
     try:
         answer = float(input(prompt))
+        #invalid number if pulled up by these
         if answer <= 0:
             print('number had to be positive')
             NumError(prompt)
         if answer >= 9999999999:
             print('That is too much, try again')
-            NumError(prompt)  
+            NumError(prompt)
+        #valid number it passes through to here and checks if input is correct
         else:
             correct("num")
             if Correct == 'y':
                 return answer
+    #not a number if picked up here
     except ValueError:
         print('Thats not a number! Try again')
         NumError(prompt)
 
 
+#Error control for Strings
 def StrError(prompt):
     global Prompt
     global answer
     while True:
         Prompt = prompt
         answer = str(input(prompt))
+        #identifies if input is number and raises and error if it is
         for f in [int, float]:
             try:
                 _ = f(answer)
@@ -33,17 +42,21 @@ def StrError(prompt):
             else:
                 print('Input shouldnt be a number')
                 StrError(Prompt)
+        #if passes checks if input is correct
         correct("str")
         return answer
 
 
+#Asks users if their input is correct
 def correct(return_):
     global Prompt
     global Correct
     Correct = str(input('Please check if this information correct? (y/n) '))
     if Correct in ('y', 'n'):
+        #if correct continues program as normal
         if Correct == 'y':
             return
+        #if incorrect determines where call came from and sends it back to ask again
         elif Correct == 'n':
             if return_ == "str":
                 StrError(Prompt)
@@ -85,27 +98,35 @@ def Range_():
     while True:
         n = input('\nPlease select a range: (1. Regular 2. Gourmet)? ')
         n = int(n)
+        #if regular sets pizza price to 8.5 and gets ready to print
         if n == 1:
             _Range = regular
             pizzaprice = 8.5
+        #if gourmet sets pizza price to 12.5 and gets ready to print
         elif n == 2:
             _Range = gourmet
             pizzaprice = 12.5
+        #handles invalid inputs
         else:
             print('Invalid input')
             continue
+        #prints range that has been selected one by one
         for i in range(len(_Range)):
             print(i + 1, '- ', _Range[i + 1])
         return
 
 
-def pizza():
+#selects pizza
+def _pizza():
     global Pizza
     pizza = NumError("\nWhat Pizza would you like? (please select number when making choice) ")
     pizza = int(answer)
+    #determines if selected pizza is in selected range
     if pizza in _Range:
         Pizza = _Range[pizza]
         print('\nYou have selected: ', Pizza, '\n')
+    else:
+        _pizza()
 
 
 #finds out how many pizzas user wants and handles costomizing each individual pizza
@@ -133,7 +154,7 @@ def ammount():
             pizzaorder = {}
         return
     #handles if total pizzas have reached limit
-    if tpammount > 5 or pammount > 5:
+    elif tpammount > 5 or pammount > 5:
         tpammount -= pammount
         print('You have selected: ', pammount, Pizza, 'pizzas')
         print('You have exceeded the maximum amount of 5 pizzas, you can order up to', 5 - tpammount, 'more pizzas')
@@ -144,22 +165,28 @@ def ammount():
         ammount()
 
 
+#select toppings (if wanted)
 def topping_(pizzan):
     global toppingprice
     toppingli = []
     topping = ''
     s = ''
     s = input('\nWould you like any extra toppings for pizza #' + str(pizzan) + '? (y/n) ')
+    #allows selection of toppings
     if s == 'y':
         print("\n")
+        #prints off toppings one by one
         for i in range(len(toppings)):
             print(i + 1, '- ', toppings[i + 1])
+        #allows user to select topping
         while True:
             topping = NumError('\nPlease select a topping you would like: ')
             topping = int(answer)
+            #determines if topping is in avalible list and if so adds to list + .50 charge
             if topping in toppings:
                 toppingli.append(toppings[topping])
                 toppingprice += 0.5
+                #asks if user wants more toppings if no adds list to dictionary, if yes repeates code
                 s = input('Would you like any more toppings? (y/n) ')
                 if s == 'y':
                     continue
@@ -173,6 +200,7 @@ def topping_(pizzan):
                 print('Invalid input')
                 topping_()
         print('You have selected: ', topping)
+    #sets toppings to none
     elif s == 'n':
         pizzaorder["Toppings"] = "Toppings: None"
         return
@@ -181,6 +209,7 @@ def topping_(pizzan):
         topping_()
 
 
+#calculates the cost of pizza + total cost
 def Pricecalc():
     global ordertotal
     pizzaorder["PizzaCost"] = "Pizza: $" + str(pizzaprice)
@@ -189,11 +218,10 @@ def Pricecalc():
     pizzaorder["TotalCost"] = "Total: $" + str(pizzatotal)
     ordertotal += pizzatotal
 
-    
-
 
 # Main loop
 while True:
+    #sets up all varibles and if restarted resets varibles to default values
     ordertotal = 0
     toppingprice = 0
     pizzaprice = 0
@@ -208,38 +236,56 @@ while True:
     order = {}
     pizzaorder = {}
     Topping = {}
+    #selects pickup or delivery
     Collect = str(input('Would you like deliverly or pickup? '))
     Collect = Collect.lower().strip().replace(' ', '')
+    #sends to delivery function
     if Collect == 'delivery':
         delivery()
         deliveryc = 3
+    #sends to pickup function
     elif Collect == 'pickup':
         pickup()
         deliveryc = 0
     else:
         print('that is not an option')
         continue
+    #loop for pizza ordering
     while True:
         Range_()
-        pizza()
+        _pizza()
         ammount()
+        #allows user to order another pizza
         RepeatOrder = input('\nwould you like another pizza? (y/n) ')
-        if RepeatOrder == 'y':
-            continue
-        elif RepeatOrder == 'n':
+        #determines if user already ordered 5 pizzas, continues to order breakdown is they have
+        if tpammount == 5 and RepeatOrder == 'y':
+            print("You have already ordered 5 pizzas, you cannot order more")
             break
+        else:
+            #allows user to add another pizza
+            if RepeatOrder == 'y':
+                continue
+            #continues to cost breakdown
+            elif RepeatOrder == 'n':
+                break
+    #cost breakdown of the order, spit into individual pizzas + total cost
     print("Here's your order total:")
     for i in range(len(order)):
         print(i + 1, ". \n", order[i + 1]["Pizza"], "\n", order[i + 1]["Toppings"], "\n", order[i + 1]["PizzaCost"], "\n", order[i + 1]["ToppingsCost"], "\n", order[i + 1]["TotalCost"], "\n")
     print('Delivery: ${}' .format(deliveryc))
     print("\nYour total is: $" + str(ordertotal))
-    restart = input('\nwould you like to restart the program? (y/n) ')
-    if restart == 'y':
-        continue
-    elif restart == 'n':
-        print("goodbye!")
-        break
+    #allows user to restart to quit the program
+    while True:
+        restart = input('\nwould you like to restart the program? (y/n) ')
+        if restart == 'y':
+            continue
+        elif restart == 'n':
+            print("goodbye!")
+            sys.exit()
+        else:
+            print("Invalid input, please try again!")
+            continue
 
 
-#todo:
-#fix the y/n that sends back to last name question
+#do flow chart
+#film program working example
