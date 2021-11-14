@@ -1,17 +1,3 @@
-ordertotal = 0
-toppingprice = 0
-pizzaprice = 0
-n = 0
-s = ''
-Prompt = ''
-tpammount = 0
-regular = {1:"Hawaian", 2:"Ham & Cheese", 3:"Pepperoni", 4:"Vegetarian", 5:"Cheese", 6:"Margareta",  7:"Cheesy Garlic"}
-gourmet = {1:"Meat lovers", 2:"Vege Supreme", 3:"Chicken Deluxe", 4:"Triple Cheese", 5:"New Yorker"}
-toppings = {1:"Pepperoni", 2:"Sausage", 3:"Bacon", 4:"Ham", 5:"Chicken", 6:"Mushrooms", 7:"Onions", 8:"Olives", 9:"Green Peppers", 10:"Pineapple", 11:"Spinach", 12:"Jalapenos", 13:"Banana Peppers"}
-order = {}
-pizzaorder = {}
-Topping = {}
-
 def NumError(prompt):
     global Prompt
     global answer
@@ -70,7 +56,8 @@ def correct(return_):
 
 #collects first name, last name, phone number, address and adds $3 to total when delivery is selected
 def delivery():
-    Price = 3
+    global ordertotal
+    ordertotal += 3
     FirstName = StrError('What is the first name? ')
     FirstName = answer
     LastName = StrError('What is the last name? ')
@@ -78,7 +65,7 @@ def delivery():
     Address = StrError('What is the address? ')
     Address = answer
     PhoneNumber = NumError('Whats the phone number? ')
-    PhoneNumber = answer
+    PhoneNumber = int(answer)
     print('\nFirst name: ', FirstName, '\nLast name: ', LastName, '\nAddress: ', Address, '\nPhone number: ', PhoneNumber)
 
 
@@ -94,47 +81,54 @@ def pickup():
 #sellect range
 def Range_():
     global pizzaprice
-    global Range
-    Range = input('\nPlease select a range: (1. Regular 2. Gourmet)? ')
-    if Range == '1':
-        Range = regular
-        pizzaprice = 8.5
-    elif Range == '2':
-        Range = gourmet
-        pizzaprice = 12.5
-    else:
-        print('Invalid input')
-        Range_()
-    for n in range(len(Range)):
-        print(n + 1, '- ', Range[n + 1])
+    global _Range
+    while True:
+        n = input('\nPlease select a range: (1. Regular 2. Gourmet)? ')
+        n = int(n)
+        if n == 1:
+            _Range = regular
+            pizzaprice = 8.5
+        elif n == 2:
+            _Range = gourmet
+            pizzaprice = 12.5
+        else:
+            print('Invalid input')
+            continue
+        for i in range(len(_Range)):
+            print(i + 1, '- ', _Range[i + 1])
+        return
 
 
 def pizza():
     global Pizza
-    pizza = NumError("\nWhat Pizza would you like? (please select number when making choice)")
+    pizza = NumError("\nWhat Pizza would you like? (please select number when making choice) ")
     pizza = int(answer)
-    if pizza in Range:
-        Pizza = Range[pizza]
+    if pizza in _Range:
+        Pizza = _Range[pizza]
         print('You have selected: ', Pizza)
 
 
 def ammount():
     global tpammount
+    global toppingprice
+    global pizzaorder
+    global pizzan
     pammount = NumError('How many pizzas would you like? ')
     pammount = int(answer)
+    tpammount += pammount
     if pammount >= 1 and pammount <= 5 and tpammount <= 5:
-        tpammount += pammount
         print('\nYou have selected: ', pammount, Pizza, 'pizzas')
-        n = 0
         for i in range(pammount):
-            n += 1
+            pizzan += 1
             toppingprice = 0
             pizzaorder["Pizza"] = str(Pizza)
-            topping_(n)
+            topping_(pizzan)
             Pricecalc()
-            order[n] = pizzaorder
+            order[pizzan] = pizzaorder
+            pizzaorder = {}
         return
-    elif tpammount < 5 or pammount < 5:
+    if tpammount > 5 or pammount > 5:
+        tpammount -= pammount
         print('You have selected: ', pammount, Pizza, 'pizzas')
         print('You have exceeded the maximum amount of 5 pizzas, you can order up to', 5 - tpammount, 'more pizzas')
         ammount()
@@ -143,11 +137,12 @@ def ammount():
         ammount()
 
 
-def topping_(n):
+def topping_(pizzan):
     global toppingprice
     toppingli = []
+    topping = ''
     s = ''
-    s = input('\nWould you like any extra toppings for pizza #' + str(n) + '? (y/n) ')
+    s = input('\nWould you like any extra toppings for pizza #' + str(pizzan) + '? (y/n) ')
     if s == 'y':
         print("\n")
         for i in range(len(toppings)):
@@ -172,7 +167,7 @@ def topping_(n):
                 topping_()
         print('You have selected: ', topping)
     elif s == 'n':
-        pizzaorder["Toppings"] = "toppings: None"
+        pizzaorder["Toppings"] = "Toppings: None"
         return
     else:
         print('Invalid input')
@@ -192,12 +187,25 @@ def Pricecalc():
 
 # Main loop
 while True:
+    ordertotal = 0
+    toppingprice = 0
+    pizzaprice = 0
+    n = 0
+    s = ''
+    Prompt = ''
+    tpammount = 0
+    pizzan = 0
+    regular = {1:"Hawaian", 2:"Ham & Cheese", 3:"Pepperoni", 4:"Vegetarian", 5:"Cheese", 6:"Margareta",  7:"Cheesy Garlic"}
+    gourmet = {1:"Meat lovers", 2:"Vege Supreme", 3:"Chicken Deluxe", 4:"Triple Cheese", 5:"New Yorker"}
+    toppings = {1:"Pepperoni", 2:"Sausage", 3:"Bacon", 4:"Ham", 5:"Chicken", 6:"Mushrooms", 7:"Onions", 8:"Olives", 9:"Green Peppers", 10:"Pineapple", 11:"Spinach", 12:"Jalapenos", 13:"Banana Peppers"}
+    order = {}
+    pizzaorder = {}
+    Topping = {}
     Collect = str(input('Would you like deliverly or pickup? '))
     Collect = Collect.lower().strip().replace(' ', '')
     if Collect == 'delivery':
         delivery()
         deliveryc = 3
-        ordertotal += deliveryc
     elif Collect == 'pickup':
         pickup()
         deliveryc = 0
@@ -216,12 +224,12 @@ while True:
     print("Here's your order total:")
     for i in range(len(order)):
         print(i + 1, ". \n", order[i + 1]["Pizza"], "\n", order[i + 1]["Toppings"], "\n", order[i + 1]["PizzaCost"], "\n", order[i + 1]["ToppingsCost"], "\n", order[i + 1]["TotalCost"], "\n")
-        print("Delivery: $" + str())
-    print("Your total is: $" + str(ordertotal))
-    input('\nwould you like to restart the program? (y/n) ')
-    if input == 'y':
+    print('Delivery: ${}' .format(deliveryc))
+    print("\nYour total is: $" + str(ordertotal))
+    restart = input('\nwould you like to restart the program? (y/n) ')
+    if restart == 'y':
         continue
-    elif input == 'n':
+    elif restart == 'n':
         print("goodbye!")
         break
 
