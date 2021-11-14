@@ -105,19 +105,24 @@ def pizza():
     pizza = int(answer)
     if pizza in _Range:
         Pizza = _Range[pizza]
-        print('You have selected: ', Pizza)
+        print('\nYou have selected: ', Pizza, '\n')
 
 
+#finds out how many pizzas user wants and handles costomizing each individual pizza
 def ammount():
+    #compliles nessercary variables
     global tpammount
     global toppingprice
     global pizzaorder
     global pizzan
+    #gets ammount of pizzas wanted and processes that information (with error control)
     pammount = NumError('How many pizzas would you like? ')
     pammount = int(answer)
     tpammount += pammount
+    #checks if total pizzas is a viable number and if total pizzas is less than 5 pizzas
     if pammount >= 1 and pammount <= 5 and tpammount <= 5:
         print('\nYou have selected: ', pammount, Pizza, 'pizzas')
+        #goes through pizza individually and handles topping and pricing funtions for each individual pizza + adds them to order dictionary
         for i in range(pammount):
             pizzan += 1
             toppingprice = 0
@@ -127,11 +132,13 @@ def ammount():
             order[pizzan] = pizzaorder
             pizzaorder = {}
         return
+    #handles if total pizzas have reached limit
     if tpammount > 5 or pammount > 5:
         tpammount -= pammount
         print('You have selected: ', pammount, Pizza, 'pizzas')
         print('You have exceeded the maximum amount of 5 pizzas, you can order up to', 5 - tpammount, 'more pizzas')
         ammount()
+    #handles error/invalid input
     else:
         print("You have given an invaid input, please try again\n")
         ammount()
